@@ -17,9 +17,48 @@ const res = await client.query('SELECT $1::text as message', ['Hello'], (err, re
   client.end()
 })
 
+
+const { Pool, Client } = require('pg')
+
+const pool = new Pool()
+
+pool.query('SELECT NOW()', (err, res) => {
+  console.log(err, res)
+  pool.end()
+})
+
+const res = await pool.query('SELECT NOW()')
+await pool.end()
+
+const client = new Client()
+await client.connect()
+
+const res = await client.query('SELECT NOW()')
+await client.end()
+
+const client = new Client()
+await client.connect()
+
+const res = await client.query('SELECT NOW()')
+await client.end()
+
+
 ```
 
 ```
+PGUSER=dbuser \
+PGHOST=database.server.com \
+PGPASSWORD=secretpassword \
+PGDATABASE=mydb \
+PGPORT=3211 \
+node script.js
+
+
+PGHOST='localhost'
+PGUSER=process.env.USER
+PGDATABASE=process.env.USER
+PGPASSWORD=null
+PGPORT=5432
 ```
 
 
